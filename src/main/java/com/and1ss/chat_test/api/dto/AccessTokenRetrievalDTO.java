@@ -1,4 +1,4 @@
-package com.and1ss.chat_test.services.auth.model;
+package com.and1ss.chat_test.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

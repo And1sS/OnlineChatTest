@@ -1,6 +1,5 @@
-package com.and1ss.chat_test.services.private_chat.model;
+package com.and1ss.chat_test.api.dto;
 
-import com.and1ss.chat_test.services.auth.model.AccountInfoRetrievalDTO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -10,7 +9,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrivateMessageRetrievalDTO {
+public class GroupMessageRetrievalDTO {
     protected UUID id;
 
     private AccountInfoRetrievalDTO author;

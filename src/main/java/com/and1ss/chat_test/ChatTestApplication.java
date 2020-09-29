@@ -1,22 +1,12 @@
 package com.and1ss.chat_test;
 
-import com.and1ss.chat_test.services.auth.AuthTestService;
-import com.and1ss.chat_test.services.group_chat.GroupChatTestService;
-import com.and1ss.chat_test.services.group_chat.GroupChatTestServiceImpl;
-import com.and1ss.chat_test.services.group_chat.model.GroupChatCreationDTO;
-import com.and1ss.chat_test.services.group_chat.model.GroupChatRetrievalDTO;
-import com.and1ss.chat_test.services.group_chat.model.GroupMessageCreationDTO;
-import com.and1ss.chat_test.services.group_chat.model.GroupMessageRetrievalDTO;
-import com.and1ss.chat_test.services.private_chat.PrivateChatTestService;
-import com.and1ss.chat_test.services.private_chat.PrivateChatTestServiceImpl;
-import com.and1ss.chat_test.services.auth.AuthTestServiceImpl;
-import com.and1ss.chat_test.services.auth.model.AccountInfoRetrievalDTO;
-import com.and1ss.chat_test.services.auth.model.LoginInfoDTO;
-import com.and1ss.chat_test.services.auth.model.RegisterInfoDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateChatCreationDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateChatRetrievalDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateMessageCreationDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateMessageRetrievalDTO;
+import com.and1ss.chat_test.api.dto.*;
+import com.and1ss.chat_test.services.AuthTestService;
+import com.and1ss.chat_test.services.GroupChatTestService;
+import com.and1ss.chat_test.services.impl.GroupChatTestServiceImpl;
+import com.and1ss.chat_test.services.PrivateChatTestService;
+import com.and1ss.chat_test.services.impl.PrivateChatTestServiceImpl;
+import com.and1ss.chat_test.services.impl.AuthTestServiceImpl;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Arrays;

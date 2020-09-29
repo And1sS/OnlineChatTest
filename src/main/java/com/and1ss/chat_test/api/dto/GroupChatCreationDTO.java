@@ -1,4 +1,4 @@
-package com.and1ss.chat_test.services.group_chat.model;
+package com.and1ss.chat_test.api.dto;
 
 import lombok.*;
 

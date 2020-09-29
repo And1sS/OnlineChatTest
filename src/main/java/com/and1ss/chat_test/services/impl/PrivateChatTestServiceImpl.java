@@ -1,9 +1,10 @@
-package com.and1ss.chat_test.services.private_chat;
+package com.and1ss.chat_test.services.impl;
 
-import com.and1ss.chat_test.services.private_chat.model.PrivateChatCreationDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateChatRetrievalDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateMessageRetrievalDTO;
-import com.and1ss.chat_test.services.private_chat.model.PrivateMessageCreationDTO;
+import com.and1ss.chat_test.api.dto.PrivateChatCreationDTO;
+import com.and1ss.chat_test.api.dto.PrivateChatRetrievalDTO;
+import com.and1ss.chat_test.api.dto.PrivateMessageCreationDTO;
+import com.and1ss.chat_test.api.dto.PrivateMessageRetrievalDTO;
+import com.and1ss.chat_test.services.PrivateChatTestService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;

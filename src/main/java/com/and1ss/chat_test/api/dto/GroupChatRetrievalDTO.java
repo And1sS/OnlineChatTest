@@ -1,11 +1,9 @@
-package com.and1ss.chat_test.services.group_chat.model;
+package com.and1ss.chat_test.api.dto;
 
-import com.and1ss.chat_test.services.auth.model.AccountInfoRetrievalDTO;
 import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Data
 @Builder

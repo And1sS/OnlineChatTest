@@ -10,9 +10,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrivateMessageRetrievalDTO {
-    protected UUID id;
+    @NonNull
+    private UUID id;
 
-    private AccountInfoRetrievalDTO author;
+    private UUID authorId;
 
     @NonNull
     private UUID chatId;

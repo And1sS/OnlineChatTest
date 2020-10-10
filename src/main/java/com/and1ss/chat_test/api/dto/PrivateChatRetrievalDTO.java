@@ -12,7 +12,8 @@ public class PrivateChatRetrievalDTO {
     @NonNull
     private UUID id;
 
-    private AccountInfoRetrievalDTO user1;
+    private UUID user1Id;
 
-    private AccountInfoRetrievalDTO user2;
+    private UUID user2Id;
+
 }

@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootApplication
 public class ChatTestApplication {
-    private static UUID myUUID = UUID.fromString("af8beff1-4251-4abe-91f8-5202b51bceba");
-    private static UUID andrewUUID = UUID.fromString("3baddb65-8eb6-4ce7-b727-5c47876a8282");
-    private static UUID danyloUUID = UUID.fromString("08ed18c1-200e-49e1-bd93-770124a58806");
+    private static UUID myUUID = UUID.fromString("a62ddbda-9ffe-492f-bfe7-7c4c33446d4f");
+    private static UUID andrewUUID = UUID.fromString("a1dbbefb-6697-42eb-aa75-fca6ba8ffb67");
+    private static UUID danyloUUID = UUID.fromString("a1f8f414-bc28-4dca-b6d6-2276b23c8b2f");
 
     private static String myAccessToken;
 
@@ -40,14 +40,11 @@ public class ChatTestApplication {
                         .participants(Arrays.asList(myUUID, andrewUUID, danyloUUID))
                         .build();
 
-        try {
+
             GroupChatRetrievalDTO groupChat = groupChatTestService.createGroupChat(
                     groupChatCreationDTO,
                     myAccessToken
             ).block();
-        } catch (Exception e) {
-            System.out.println("Alex-Andrew private chat already exists");
-        }
 
 
         // Getting my group chats as array
@@ -193,8 +190,8 @@ public class ChatTestApplication {
         assert myPrivateChatsArray != null;
         Arrays.stream(myPrivateChatsArray)
                 .filter(privateChatRetrievalDTO ->
-                        privateChatRetrievalDTO.getUser1().getId().equals(myUUID) &&
-                                privateChatRetrievalDTO.getUser2().getId().equals(andrewUUID)
+                        privateChatRetrievalDTO.getUser1Id().equals(myUUID) &&
+                                privateChatRetrievalDTO.getUser2Id().equals(andrewUUID)
                 ).findAny()
                 .ifPresent(alexAndrewPrivateChat -> {
                     alexAndrewPrivateChatId.set(alexAndrewPrivateChat.getId());

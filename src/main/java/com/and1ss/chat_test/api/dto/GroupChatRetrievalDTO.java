@@ -18,7 +18,8 @@ public class GroupChatRetrievalDTO {
 
     private String about;
 
-    private AccountInfoRetrievalDTO creator;
+    @NonNull
+    private UUID creatorId;
 
     @NonNull
     private List<AccountInfoRetrievalDTO> participants;

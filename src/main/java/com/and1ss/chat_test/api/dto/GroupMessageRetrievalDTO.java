@@ -10,9 +10,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupMessageRetrievalDTO {
-    protected UUID id;
+    @NonNull
+    private UUID id;
 
-    private AccountInfoRetrievalDTO author;
+    @NonNull
+    private UUID authorId;
 
     @NonNull
     private UUID chatId;

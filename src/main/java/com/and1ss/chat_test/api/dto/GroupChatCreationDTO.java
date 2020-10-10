@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GroupChatCreationDTO {
     @NonNull
     private String title;

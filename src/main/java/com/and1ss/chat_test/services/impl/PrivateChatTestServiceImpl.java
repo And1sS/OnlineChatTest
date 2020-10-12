@@ -18,7 +18,7 @@ public class PrivateChatTestServiceImpl implements PrivateChatTestService {
 
     public PrivateChatTestServiceImpl() {
         this.webClient = WebClient.builder()
-                .baseUrl("http://localhost:8081/chats/private")
+                .baseUrl("http://localhost:8080/api/private-chat-service/chats/")
                 .defaultHeader(
                         HttpHeaders.CONTENT_TYPE,
                         MediaType.APPLICATION_JSON_VALUE

@@ -23,8 +23,8 @@ public class ChatTestApplication {
 
     public static void main(String[] args) {
         runAuthenticationTest();
-        runPrivateChatsTest();
         runGroupChatsTest();
+        runPrivateChatsTest();
     }
 
     private static void runGroupChatsTest() {

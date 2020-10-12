@@ -19,7 +19,7 @@ public class AuthTestServiceImpl implements AuthTestService {
 
     public AuthTestServiceImpl() {
         this.webClient = WebClient.builder()
-                .baseUrl("http://localhost:8080/auth")
+                .baseUrl("http://localhost:8080/api/user-service/auth")
                 .defaultHeader(
                         HttpHeaders.CONTENT_TYPE,
                         MediaType.APPLICATION_JSON_VALUE

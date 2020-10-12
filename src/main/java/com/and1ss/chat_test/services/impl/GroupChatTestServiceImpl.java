@@ -18,7 +18,7 @@ public class GroupChatTestServiceImpl implements GroupChatTestService {
 
     public GroupChatTestServiceImpl() {
         this.webClient = WebClient.builder()
-                .baseUrl("http://localhost:8082/chats/group")
+                .baseUrl("http://localhost:8080/api/group-chat-service/chats")
                 .defaultHeader(
                         HttpHeaders.CONTENT_TYPE,
                         MediaType.APPLICATION_JSON_VALUE

@@ -1,4 +1,4 @@
-package com.and1ss.chat_test.services.impl;
+package com.and1ss.chat_test.services.rest.impl;
 
 import com.and1ss.chat_test.api.dto.AccessTokenRetrievalDTO;
 import com.and1ss.chat_test.api.dto.AccountInfoRetrievalDTO;

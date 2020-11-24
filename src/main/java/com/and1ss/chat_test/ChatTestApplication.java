@@ -3,10 +3,14 @@ package com.and1ss.chat_test;
 import com.and1ss.chat_test.api.dto.*;
 import com.and1ss.chat_test.services.AuthTestService;
 import com.and1ss.chat_test.services.GroupChatTestService;
-import com.and1ss.chat_test.services.impl.GroupChatTestServiceImpl;
+import com.and1ss.chat_test.services.rest.impl.GroupChatTestServiceImpl;
 import com.and1ss.chat_test.services.PrivateChatTestService;
-import com.and1ss.chat_test.services.impl.PrivateChatTestServiceImpl;
-import com.and1ss.chat_test.services.impl.AuthTestServiceImpl;
+import com.and1ss.chat_test.services.rest.impl.PrivateChatTestServiceImpl;
+import com.and1ss.chat_test.services.rest.impl.AuthTestServiceImpl;
+import com.and1ss.group_chat_service.GrpcGroupChatCreationDTO;
+import com.and1ss.private_chat_service.*;
+import com.and1ss.user_service.GrpcLoginCredentialsDTO;
+import com.and1ss.user_service.GrpcRegisterInfoDTO;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Arrays;
@@ -19,15 +23,81 @@ public class ChatTestApplication {
     private static UUID andrewUUID = UUID.fromString("a1dbbefb-6697-42eb-aa75-fca6ba8ffb67");
     private static UUID danyloUUID = UUID.fromString("a1f8f414-bc28-4dca-b6d6-2276b23c8b2f");
 
+    private static final String alexlogin = "alexmaltsevloginf1a433utsdfggahgsjget";
+    private static final String andrewlogin = "andrewmolnarlogin14futasdfgjfsghagjgte33";
+    private static final String danylologin = "danylodubikasdflogin14fgsutdasdgghtefgj33";
     private static String myAccessToken;
 
     public static void main(String[] args) {
-        runAuthenticationTest();
-        runGroupChatsTest();
-        runPrivateChatsTest();
+//        try {
+//            runAuthenticationTest();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        try {
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            System.out.println("----------------------------GROUP CHAT TEST----------------------");
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            runGroupChatsTest();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        try {
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            System.out.println("----------------------------PRIVATE CHAT TEST----------------------");
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            runPrivateChatsTest();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        runRestAuthenticationTest();
+//        runRestGroupChatsTest();
+//        runRestPrivateChatsTest();
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("----------------------------AUTH TEST----------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        runGrpcAuthenticationTest();
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("----------------------------PRIVATE CHAT TEST----------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        runGrpcPrivateChatsTest();
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("----------------------------GROUP CHAT TEST----------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        runGrpcGroupChatsTest();
+
+        System.out.println();
+        System.out.println();
+        System.out.println("---------------------ALL TESTS PASSED-------------------");
     }
 
-    private static void runGroupChatsTest() {
+    private static void runRestGroupChatsTest() {
         final GroupChatTestService groupChatTestService =
                 new GroupChatTestServiceImpl();
 
@@ -41,10 +111,10 @@ public class ChatTestApplication {
                         .build();
 
 
-            GroupChatRetrievalDTO groupChat = groupChatTestService.createGroupChat(
-                    groupChatCreationDTO,
-                    myAccessToken
-            ).block();
+        GroupChatRetrievalDTO groupChat = groupChatTestService.createGroupChat(
+                groupChatCreationDTO,
+                myAccessToken
+        ).block();
 
 
         // Getting my group chats as array
@@ -59,7 +129,7 @@ public class ChatTestApplication {
 
 
         // Sending messages to group chat
-        GroupMessageRetrievalDTO firstGroupMessage = sendGroupMessageTo(
+        GroupMessageRetrievalDTO firstGroupMessage = sendRestGroupMessageTo(
                 groupChatTestService,
                 "This is my first message to group chat! Hi there!",
                 groupChatId,
@@ -67,7 +137,7 @@ public class ChatTestApplication {
         );
         System.out.println(firstGroupMessage);
 
-        GroupMessageRetrievalDTO secondGroupMessage = sendGroupMessageTo(
+        GroupMessageRetrievalDTO secondGroupMessage = sendRestGroupMessageTo(
                 groupChatTestService,
                 "This is my second message to group chat!",
                 groupChatId,
@@ -84,26 +154,67 @@ public class ChatTestApplication {
         System.out.println(Arrays.toString(groupMessages));
     }
 
-    private static void runAuthenticationTest() {
+    private static void runGrpcGroupChatsTest() {
+        final com.and1ss.chat_test.services.grpc.GroupChatTestService groupChatTestService =
+                new com.and1ss.chat_test.services.grpc.impl.GroupChatTestServiceImpl();
+
+        // Creating my group chat
+        GrpcGroupChatCreationDTO groupChatCreationDTO =
+                GrpcGroupChatCreationDTO.newBuilder()
+                        .setTitle("This is first group chat!")
+                        .setAbout("description")
+                        .setToken(myAccessToken)
+                        .addAllParticipants(
+                                Arrays.asList(
+                                        myUUID.toString(),
+                                        andrewUUID.toString(),
+                                        danyloUUID.toString()
+                                )
+                        ).build();
+
+
+        final var groupChat = groupChatTestService.createGroupChat(groupChatCreationDTO);
+
+
+        // Getting my group chats as array
+        final var myGroupChats = groupChatTestService.getAllGroupChats(
+                com.and1ss.group_chat_service.GrpcAccessTokenIncomingDTO
+                        .newBuilder()
+                        .setToken(myAccessToken)
+                        .build()
+        );
+
+        myGroupChats.getChatsList()
+                .forEach(System.out::println);
+
+        assert myGroupChats != null;
+        String groupChatId = myGroupChats.getChatsList().get(0).getId();
+        System.out.println(groupChatId);
+
+        groupChatTestService.shutdown();
+        System.out.println("********************* GROUP CHATS TEST PASSED ******************");
+    }
+
+    private static void runRestAuthenticationTest() {
         final AuthTestService authTestService =
                 new AuthTestServiceImpl();
 
         RegisterInfoDTO alex = RegisterInfoDTO.builder()
-                .login("alexmaltsevlogin")
+                .login(alexlogin)
                 .password("alexmaltsevpassword")
                 .name("Alex")
                 .surname("Maltsev")
                 .build();
 
         RegisterInfoDTO andrew = RegisterInfoDTO.builder()
-                .login("andrewmolnarlogin")
+                .login(andrewlogin)
                 .password("andrewmolnarpassword")
                 .name("Andrew")
                 .surname("Molnar")
                 .build();
 
         RegisterInfoDTO danylo = RegisterInfoDTO.builder()
-                .login("danylodubiklogin")
+                .login(danylologin)
                 .password("danylodubikpassword")
                 .name("Danylo")
                 .surname("Dubik")
@@ -140,13 +251,13 @@ public class ChatTestApplication {
         // Getting my access token
         myAccessToken = authTestService.login(
                 new LoginInfoDTO(
-                        "alexmaltsevlogin",
+                        alexlogin,
                         "alexmaltsevpassword")
         ).block().getAccessToken().toString();
         System.out.println(myAccessToken);
     }
 
-    private static void runPrivateChatsTest() {
+    private static void runRestPrivateChatsTest() {
         final PrivateChatTestService privateChatTestService =
                 new PrivateChatTestServiceImpl();
 
@@ -200,7 +311,7 @@ public class ChatTestApplication {
         System.out.println(alexAndrewPrivateChatId.get());
 
         // Sending messages to Andrew
-        PrivateMessageRetrievalDTO firstMessageToAndrew = sendPrivateMessageTo(
+        PrivateMessageRetrievalDTO firstMessageToAndrew = sendRestPrivateMessageTo(
                 privateChatTestService,
                 "This is my first message to Andrew! Hi there!",
                 alexAndrewPrivateChatId.get(),
@@ -208,7 +319,7 @@ public class ChatTestApplication {
         );
         System.out.println(firstMessageToAndrew);
 
-        PrivateMessageRetrievalDTO secondMessageToAndrew = sendPrivateMessageTo(
+        PrivateMessageRetrievalDTO secondMessageToAndrew = sendRestPrivateMessageTo(
                 privateChatTestService,
                 "This is my second message to Andrew!",
                 alexAndrewPrivateChatId.get(),
@@ -225,8 +336,131 @@ public class ChatTestApplication {
         System.out.println(Arrays.toString(privateMessagesWithAndrew));
     }
 
+    private static void runGrpcAuthenticationTest() {
+        final com.and1ss.chat_test.services.grpc.AuthTestService authTestService =
+                new com.and1ss.chat_test.services.grpc.impl.AuthTestServiceImpl();
+
+        GrpcRegisterInfoDTO alex = GrpcRegisterInfoDTO.newBuilder()
+                .setLogin(alexlogin)
+                .setPassword("alexmaltsevpassword")
+                .setName("Alex")
+                .setSurname("Maltsev")
+                .build();
+
+        GrpcRegisterInfoDTO andrew = GrpcRegisterInfoDTO.newBuilder()
+                .setLogin(andrewlogin)
+                .setPassword("andrewpassword")
+                .setName("Andrew")
+                .setSurname("Molnar")
+                .build();
+
+        GrpcRegisterInfoDTO danylo = GrpcRegisterInfoDTO.newBuilder()
+                .setLogin(danylologin)
+                .setPassword("danylopassword")
+                .setName("Danylo")
+                .setSurname("Dubik")
+                .build();
+
+        // Registering users
+        try {
+            final var alexAccountInfo = authTestService.register(alex);
+            assert alexAccountInfo != null;
+            myUUID = UUID.fromString(alexAccountInfo.getId());
+        } catch (Exception e) {
+            System.out.println("alex is already registered");
+        }
+
+        try {
+            final var andrewAccountInfo = authTestService.register(andrew);
+            assert andrewAccountInfo != null;
+            andrewUUID = UUID.fromString(andrewAccountInfo.getId());
+        } catch (Exception e) {
+            System.out.println("andrew is already registered");
+        }
+
+        try {
+            final var danyloAccountInfo = authTestService.register(danylo);
+            assert danyloAccountInfo != null;
+            danyloUUID = UUID.fromString(danyloAccountInfo.getId());
+        } catch (Exception e) {
+            System.out.println("danylo is already registered");
+        }
+
+        // Getting my access token
+        myAccessToken = authTestService.login(
+                GrpcLoginCredentialsDTO.newBuilder()
+                        .setLogin(alexlogin)
+                        .setPassword("alexmaltsevpassword")
+                        .build()
+        ).getToken();
+        System.out.println(myAccessToken);
+
+        authTestService.shutdown();
+        System.out.println("********************* AUTH TEST PASSED ******************");
+    }
+
+    private static void runGrpcPrivateChatsTest() {
+        final com.and1ss.chat_test.services.grpc.PrivateChatTestService privateChatTestService =
+                new com.and1ss.chat_test.services.grpc.impl.PrivateChatTestServiceImpl();
+
+        // Creating my private chats
+        GrpcChatCreationDTO alexAndrewPrivateChatCreationDTO =
+                GrpcChatCreationDTO.newBuilder()
+                        .setToken(myAccessToken)
+                        .setUserId(andrewUUID.toString())
+                        .build();
+
+        try {
+            final var alexAndrewPrivateChat = privateChatTestService.createPrivateChat(
+                    alexAndrewPrivateChatCreationDTO);
+        } catch (Exception e) {
+            System.out.println("Alex-Andrew private chat already exists");
+        }
+
+        GrpcChatCreationDTO alexDanyloPrivateChatCreationDTO =
+                GrpcChatCreationDTO.newBuilder()
+                        .setToken(myAccessToken)
+                        .setUserId(danyloUUID.toString())
+                        .build();
+
+        try {
+            final var alexDanyloPrivateChat = privateChatTestService.createPrivateChat(
+                    alexDanyloPrivateChatCreationDTO);
+        } catch (Exception e) {
+            System.out.println("Alex-Danylo private chat already exists");
+        }
+
+
+        // Getting my private chats as array
+        GrpcPrivateChatsDTO myPrivateChats =
+                privateChatTestService.getAllPrivateChats(
+                        GrpcAccessTokenIncomingDTO.newBuilder()
+                                .setToken(myAccessToken)
+                                .build()
+                );
+        System.out.println(myPrivateChats.toString());
+
+        // Getting my chat with Andrew Id
+        AtomicReference<String> alexAndrewPrivateChatId = new AtomicReference<>();
+
+        assert myPrivateChats != null;
+        myPrivateChats.getChatsList().stream()
+                .filter(privateChatRetrievalDTO ->
+                        privateChatRetrievalDTO.getUser1Id().equals(myUUID.toString()) &&
+                                privateChatRetrievalDTO.getUser2Id().equals(andrewUUID.toString())
+                ).findAny()
+                .ifPresent(alexAndrewPrivateChat -> {
+                    alexAndrewPrivateChatId.set(alexAndrewPrivateChat.getId());
+                });
+
+        System.out.println(alexAndrewPrivateChatId.get());
+
+        privateChatTestService.shutdown();
+        System.out.println("********************* PRIVATE CHATS TEST PASSED ******************");
+    }
+
     private static PrivateMessageRetrievalDTO
-    sendPrivateMessageTo(
+    sendRestPrivateMessageTo(
             PrivateChatTestService privateChatTestService,
             String message,
             UUID privateChatId,
@@ -244,7 +478,7 @@ public class ChatTestApplication {
 
 
     private static GroupMessageRetrievalDTO
-    sendGroupMessageTo(
+    sendRestGroupMessageTo(
             GroupChatTestService groupChatTestService,
             String message,
             UUID groupChatId,

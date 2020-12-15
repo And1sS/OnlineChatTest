@@ -1,10 +1,10 @@
 package com.and1ss.chat_test.services.rest.impl;
 
-import com.and1ss.chat_test.api.dto.AccessTokenRetrievalDTO;
-import com.and1ss.chat_test.api.dto.AccountInfoRetrievalDTO;
-import com.and1ss.chat_test.api.dto.LoginInfoDTO;
-import com.and1ss.chat_test.api.dto.RegisterInfoDTO;
-import com.and1ss.chat_test.services.AuthTestService;
+import com.and1ss.chat_test.dto.rest.AccessTokenRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.AccountInfoRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.LoginInfoDTO;
+import com.and1ss.chat_test.dto.rest.RegisterInfoDTO;
+import com.and1ss.chat_test.services.rest.AuthTestService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;

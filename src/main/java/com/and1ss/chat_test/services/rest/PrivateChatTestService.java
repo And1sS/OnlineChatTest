@@ -1,9 +1,9 @@
-package com.and1ss.chat_test.services;
+package com.and1ss.chat_test.services.rest;
 
-import com.and1ss.chat_test.api.dto.PrivateChatCreationDTO;
-import com.and1ss.chat_test.api.dto.PrivateChatRetrievalDTO;
-import com.and1ss.chat_test.api.dto.PrivateMessageCreationDTO;
-import com.and1ss.chat_test.api.dto.PrivateMessageRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.PrivateChatCreationDTO;
+import com.and1ss.chat_test.dto.rest.PrivateChatRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.PrivateMessageCreationDTO;
+import com.and1ss.chat_test.dto.rest.PrivateMessageRetrievalDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

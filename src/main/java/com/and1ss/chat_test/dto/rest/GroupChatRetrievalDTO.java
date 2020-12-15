@@ -1,4 +1,4 @@
-package com.and1ss.chat_test.api.dto;
+package com.and1ss.chat_test.dto.rest;
 
 import lombok.*;
 
@@ -6,18 +6,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class GroupChatCreationDTO {
+public class GroupChatRetrievalDTO {
+    @NonNull
+    private UUID id;
+
     @NonNull
     private String title;
 
     private String about;
 
     @NonNull
-    private UUID creator;
+    private UUID creatorId;
 
     @NonNull
-    private List<UUID> participants;
+    private List<AccountInfoRetrievalDTO> participants;
 }
+

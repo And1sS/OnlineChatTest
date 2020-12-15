@@ -1,9 +1,9 @@
-package com.and1ss.chat_test.services;
+package com.and1ss.chat_test.services.rest;
 
-import com.and1ss.chat_test.api.dto.GroupChatCreationDTO;
-import com.and1ss.chat_test.api.dto.GroupChatRetrievalDTO;
-import com.and1ss.chat_test.api.dto.GroupMessageCreationDTO;
-import com.and1ss.chat_test.api.dto.GroupMessageRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.GroupChatCreationDTO;
+import com.and1ss.chat_test.dto.rest.GroupChatRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.GroupMessageCreationDTO;
+import com.and1ss.chat_test.dto.rest.GroupMessageRetrievalDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

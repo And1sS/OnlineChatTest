@@ -1,4 +1,4 @@
-package com.and1ss.chat_test.api.dto;
+package com.and1ss.chat_test.dto.rest;
 
 import lombok.*;
 

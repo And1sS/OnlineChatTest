@@ -1,10 +1,10 @@
 package com.and1ss.chat_test.services.rest.impl;
 
-import com.and1ss.chat_test.services.GroupChatTestService;
-import com.and1ss.chat_test.api.dto.GroupChatCreationDTO;
-import com.and1ss.chat_test.api.dto.GroupChatRetrievalDTO;
-import com.and1ss.chat_test.api.dto.GroupMessageCreationDTO;
-import com.and1ss.chat_test.api.dto.GroupMessageRetrievalDTO;
+import com.and1ss.chat_test.services.rest.GroupChatTestService;
+import com.and1ss.chat_test.dto.rest.GroupChatCreationDTO;
+import com.and1ss.chat_test.dto.rest.GroupChatRetrievalDTO;
+import com.and1ss.chat_test.dto.rest.GroupMessageCreationDTO;
+import com.and1ss.chat_test.dto.rest.GroupMessageRetrievalDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;

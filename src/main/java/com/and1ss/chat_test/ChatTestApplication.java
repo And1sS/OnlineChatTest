@@ -9,9 +9,8 @@ import com.and1ss.chat_test.services.rest.PrivateChatTestService;
 import com.and1ss.chat_test.services.rest.impl.PrivateChatTestServiceImpl;
 import com.and1ss.chat_test.services.rest.impl.AuthTestServiceImpl;
 import com.and1ss.group_chat_service.GrpcGroupChatCreationDTO;
-import com.and1ss.private_chat_service.GrpcAccessTokenIncomingDTO;
-import com.and1ss.private_chat_service.GrpcChatCreationDTO;
-import com.and1ss.private_chat_service.GrpcPrivateChatsDTO;
+import com.and1ss.group_chat_service.GrpcGroupMessageCreationDTO;
+import com.and1ss.private_chat_service.*;
 import com.and1ss.user_service.GrpcLoginCredentialsDTO;
 import com.and1ss.user_service.GrpcRegisterInfoDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,14 +41,13 @@ public class ChatTestApplication {
 
     public static void main(String[] args) throws MqttException, IOException {
         println();println();println();println();println();println();println();println();println();
+        println("############################### TESTS START #################################");
 
         runRestTests();
         runGrpcTests();
         runMqttTests();
 
         println("---------------------ALL TESTS PASSED-------------------");
-
-        clearScreen();
         System.out.println(log);
     }
 
@@ -489,6 +487,8 @@ public class ChatTestApplication {
         try {
             final var alexAndrewPrivateChat = privateChatTestService.createPrivateChat(
                     alexAndrewPrivateChatCreationDTO);
+
+            println(alexAndrewPrivateChat);
         } catch (Exception e) {
             println("Alex-Andrew private chat already exists");
         }
@@ -502,6 +502,7 @@ public class ChatTestApplication {
         try {
             final var alexDanyloPrivateChat = privateChatTestService.createPrivateChat(
                     alexDanyloPrivateChatCreationDTO);
+            println(alexDanyloPrivateChat);
         } catch (Exception e) {
             println("Alex-Danylo private chat already exists");
         }
@@ -529,8 +530,40 @@ public class ChatTestApplication {
                     alexAndrewPrivateChatId.set(alexAndrewPrivateChat.getId());
                 });
 
+        println("Found alex-andrew private chat:");
         println(alexAndrewPrivateChatId.get());
 
+        GrpcPrivateMessageCreationDTO grpcPrivateMessageCreationDTO = GrpcPrivateMessageCreationDTO.newBuilder()
+                .setToken(myAccessToken)
+                .setChatId(alexAndrewPrivateChatId.get())
+                .setContents("This is my message to alex-andrew private chat!")
+                .build();
+
+        var createdMessage = privateChatTestService.createMessage(grpcPrivateMessageCreationDTO);
+        println("Created alex-andrew private message:");
+        println(createdMessage);
+
+
+        grpcPrivateMessageCreationDTO = GrpcPrivateMessageCreationDTO.newBuilder()
+                .setToken(myAccessToken)
+                .setChatId(alexAndrewPrivateChatId.get())
+                .setContents("This is my second message to alex-andrew private chat!")
+                .build();
+
+        createdMessage = privateChatTestService.createMessage(grpcPrivateMessageCreationDTO);
+        println("Created alex-andrew private message:");
+        println(createdMessage);
+
+        final var grpcChatRetrievalDTO = GrpcChatRetrievalDTO.newBuilder()
+                .setToken(myAccessToken)
+                .setChatId(alexAndrewPrivateChatId.get())
+                .build();
+
+        final var alexAndrewPrivateMessages = privateChatTestService
+                .getAllMessagesForChat(grpcChatRetrievalDTO);
+
+        println("Got messages for alex-andrew private chat:");
+        alexAndrewPrivateMessages.getMessagesList().forEach(ChatTestApplication::println);
         privateChatTestService.shutdown();
         println("********************* PRIVATE CHATS TEST PASSED ******************");
     }
@@ -580,9 +613,5 @@ public class ChatTestApplication {
 
     private static void println(Object o) {
         log += o.toString() + "\n\n\n\n";
-    }
-
-    private static void clearScreen() throws IOException {
-        System.out.print("\033\143");
     }
 }
